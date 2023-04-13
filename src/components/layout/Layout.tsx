@@ -1,6 +1,8 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import FollowBar from './FollowBar';
+import LoginModal from '../modal/LoginModal';
+import RegisterModal from '../modal/RegisterModal';
 
 interface Props {
   children: React.ReactNode;
@@ -8,16 +10,22 @@ interface Props {
 
 export default function Layout({ children }: Props) {
   return (
-    <div className="container h-full mx-auto xl:px-28 max-w-6xl">
-      <div className="grid grid-cols-4 h-full">
-        <Sidebar />
+    <>
+      {/* Modal */}
+      <LoginModal />
+      <RegisterModal />
 
-        <main className="col-span-3 lg:col-span-2 border-x-[1px] border-neutral-800">
-          {children}
-        </main>
+      <div className="container mx-auto h-full max-w-6xl xl:px-28">
+        <div className="grid h-full grid-cols-4">
+          <Sidebar />
 
-        <FollowBar />
+          <main className="col-span-3 border-x-[1px] border-neutral-800 lg:col-span-2">
+            {children}
+          </main>
+
+          <FollowBar />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
