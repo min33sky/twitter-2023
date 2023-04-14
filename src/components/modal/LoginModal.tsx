@@ -64,11 +64,7 @@ const LoginModal = () => {
         First time using Twitter?
         <span
           onClick={onToggle}
-          className="
-            cursor-pointer
-            text-white
-            hover:underline
-          "
+          className="cursor-pointer text-white hover:underline"
         >
           {' '}
           Create an account

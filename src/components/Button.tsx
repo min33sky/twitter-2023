@@ -22,13 +22,16 @@ export default function Button({
       disabled={disabled}
       onClick={onClick}
       className={`
-        disabled:opacity-70
-        disabled:cursor-not-allowed
         rounded-full
-        font-semibold
-        hover:opacity-80
-        transition
         border-2
+        font-semibold
+        outline-none
+        transition
+        hover:opacity-80
+        focus:ring-4
+        focus:ring-sky-500
+        disabled:cursor-not-allowed
+        disabled:opacity-70
         ${fullWidth ? 'w-full' : 'w-fit'}
         ${secondary ? 'bg-white' : 'bg-sky-500'}
         ${secondary ? 'text-black' : 'text-white'}

@@ -46,66 +46,37 @@ export default function Modal({
   return (
     <>
       <div
-        className="
-          fixed
-          inset-0
-          z-50
-          flex
-          items-center
-          justify-center
-          overflow-y-auto
-          overflow-x-hidden
-          bg-neutral-800
-          bg-opacity-70
-          outline-none
-          focus:outline-none
+        className="fixed inset-0 z-50 flex items-center justify-center
+          overflow-y-auto overflow-x-hidden bg-neutral-800 bg-opacity-70
+          outline-none focus:outline-none
         "
       >
+        <div onClick={handleClose} className="absolute inset-0">
+          <p className="sr-only">모달 닫기</p>
+        </div>
+
         <div className="relative mx-auto my-6 h-full w-full lg:h-auto lg:w-3/6 lg:max-w-3xl">
           {/*content*/}
           <div
-            className="
-            relative
-            flex
-            h-full
-            w-full
-            flex-col
-            rounded-lg
-            border-0
-            bg-black
-            shadow-lg
-            outline-none
-            focus:outline-none
-            lg:h-auto
-            "
+            className="relative flex h-full w-full flex-col rounded-lg border-0 bg-black shadow-lg
+                        first-letter:outline-none focus:outline-none lg:h-auto"
           >
             {/*header*/}
-            <div
-              className="
-              flex
-              items-center
-              justify-between
-              rounded-t
-              p-10
-              "
-            >
+            <div className="flex items-center justify-between rounded-t p-10">
               <h3 className="text-3xl font-semibold text-white">{title}</h3>
               <button
-                className="
-                  ml-auto
-                  border-0
-                  p-1
-                  text-white
-                  transition
-                  hover:opacity-70
-                "
+                className="ml-auto border-0 p-1 text-white transition hover:opacity-70"
+                aria-label="close modal"
+                title="닫기"
                 onClick={handleClose}
               >
                 <AiOutlineClose size={20} />
               </button>
             </div>
+
             {/*body*/}
             <div className="relative flex-auto p-10">{body}</div>
+
             {/*footer*/}
             <div className="flex flex-col gap-2 p-10">
               <Button
