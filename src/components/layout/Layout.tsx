@@ -1,8 +1,11 @@
+'use client';
+
 import React from 'react';
 import Sidebar from './Sidebar';
 import FollowBar from './FollowBar';
 import LoginModal from '../modal/LoginModal';
 import RegisterModal from '../modal/RegisterModal';
+import { Toaster } from 'react-hot-toast';
 
 interface Props {
   children: React.ReactNode;
@@ -11,6 +14,7 @@ interface Props {
 export default function Layout({ children }: Props) {
   return (
     <>
+      <Toaster />
       {/* Modal */}
       <LoginModal />
       <RegisterModal />
