@@ -1,0 +1,29 @@
+import useSWR from 'swr';
+
+export default function useCurrentUser() {
+  // TODO: 실패시 재호출 방지
+  const { data, error, isLoading, mutate } = useSWR(
+    '/api/current',
+    () => fetch('/api/current').then((res) => res.json()),
+    {
+      // https://swr.vercel.app/ko/docs/error-handling
+      onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+        // 404에서 재시도 안함
+        if (error.status === 404) return;
+
+        // 3번까지만 재시도함
+        if (retryCount >= 3) return;
+
+        // 5초 후에 재시도
+        setTimeout(() => revalidate({ retryCount }), 5000);
+      },
+    },
+  );
+
+  return {
+    data,
+    error,
+    isLoading,
+    mutate,
+  };
+}

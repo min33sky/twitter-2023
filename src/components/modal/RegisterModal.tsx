@@ -4,9 +4,11 @@ import { useCallback, useState } from 'react';
 
 import useLoginModal from '@/hooks/useLoginModal';
 import useRegisterModal from '@/hooks/useRegisterModal';
+import { toast } from 'react-hot-toast';
 
 import Input from '../Input';
 import Modal from '../Modal';
+import { signIn } from 'next-auth/react';
 
 const RegisterModal = () => {
   const loginModal = useLoginModal();
@@ -32,29 +34,46 @@ const RegisterModal = () => {
     try {
       setIsLoading(true);
 
-      // await axios.post('/api/register', {
-      //   email,
-      //   password,
-      //   username,
-      //   name,
-      // });
+      console.log({
+        email,
+        password,
+        username,
+        name,
+      });
+
+      await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          username,
+          name,
+        }),
+      });
 
       setIsLoading(false);
 
-      // toast.success('Account created.');
+      toast.success('Account created.');
 
-      // signIn('credentials', {
-      //   email,
-      //   password,
-      // });
+      console.log('회원가입 성공!!');
+
+      signIn('credentials', {
+        email,
+        password,
+      });
+
+      console.log('로그인 성공!!');
 
       registerModal.onClose();
     } catch (error) {
-      // toast.error('Something went wrong');
+      toast.error('Something went wrong');
     } finally {
       setIsLoading(false);
     }
-  }, [registerModal]);
+  }, [email, name, password, registerModal, username]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
