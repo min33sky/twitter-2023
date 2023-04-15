@@ -23,7 +23,9 @@ export async function GET(request: NextRequest) {
   // console.log('### [GET] /api/current  - cookies : ', cookie);
   // console.log('### [GET] /api/current  - authOptions : ', authOptions);
 
-  // const session = await getServerSession(authOptions);
+  const session_TEMP = await getServerSession(authOptions);
+
+  console.log('### [GET] /api/current - session_TEMP : ', session_TEMP);
 
   // console.log('### [GET] /api/current - session : ', session);
 
