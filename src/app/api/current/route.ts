@@ -2,8 +2,19 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/route';
 import { prisma } from '@/lib/prismaDB';
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
 export async function GET(request: Request) {
+  const nextCookies = cookies();
+
+  // key/value 배열 형태로 되어 있으므로 reduce를 사용해서 문자열로 만든다.
+  const cookie = nextCookies.getAll().reduce((acc, cur) => {
+    return `${acc}${cur.name}=${cur.value}; `;
+  }, '');
+
+  console.log('### [GET] /api/current  - cookies : ', cookie);
+  console.log('### [GET] /api/current  - authOptions : ', authOptions);
+
   const session = await getServerSession(authOptions);
 
   console.log('### [GET] /api/current : ', session);
