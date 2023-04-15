@@ -33,7 +33,7 @@ async function getUser(userId: string) {
     headers: {
       Accept: 'application/json',
     },
-    // cache: 'no-store',
+    cache: 'no-store',
   });
 
   console.log('### 중꺾마 : ', res);
