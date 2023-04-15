@@ -1,8 +1,8 @@
-import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/route';
 import { prisma } from '@/lib/prismaDB';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { getServerSession } from 'next-auth/next';
 
 export async function GET(request: Request) {
   const nextCookies = cookies();
@@ -17,7 +17,7 @@ export async function GET(request: Request) {
 
   const session = await getServerSession(authOptions);
 
-  console.log('### [GET] /api/current : ', session);
+  console.log('### [GET] /api/current - session : ', session);
 
   if (!session) {
     return NextResponse.json(
