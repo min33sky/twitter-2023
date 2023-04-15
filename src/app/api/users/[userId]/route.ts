@@ -32,6 +32,9 @@ export async function GET(
       }),
     ]);
 
+    console.log('### [users/[userId]] GET user: ', user);
+    console.log('### [users/[userId]] GET followersCount: ', followersCount);
+
     if (!user) {
       return NextResponse.json(
         { error: '[users/[userId]] User not found' },
