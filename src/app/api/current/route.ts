@@ -1,23 +1,31 @@
 import { authOptions } from '../auth/[...nextauth]/route';
 import { prisma } from '@/lib/prismaDB';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { getServerSession } from 'next-auth/next';
+import { getToken } from 'next-auth/jwt';
 
-export async function GET(request: Request) {
-  const nextCookies = cookies();
-
-  // key/value 배열 형태로 되어 있으므로 reduce를 사용해서 문자열로 만든다.
-  const cookie = nextCookies.getAll().reduce((acc, cur) => {
-    return `${acc}${cur.name}=${cur.value}; `;
-  }, '');
-
-  console.log('### [GET] /api/current  - cookies : ', cookie);
-  console.log('### [GET] /api/current  - authOptions : ', authOptions);
-
-  const session = await getServerSession(authOptions);
+export async function GET(request: NextRequest) {
+  const session: any = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
 
   console.log('### [GET] /api/current - session : ', session);
+
+  // const nextCookies = cookies();
+
+  // // key/value 배열 형태로 되어 있으므로 reduce를 사용해서 문자열로 만든다.
+  // const cookie = nextCookies.getAll().reduce((acc, cur) => {
+  //   return `${acc}${cur.name}=${cur.value}; `;
+  // }, '');
+
+  // console.log('### [GET] /api/current  - cookies : ', cookie);
+  // console.log('### [GET] /api/current  - authOptions : ', authOptions);
+
+  // const session = await getServerSession(authOptions);
+
+  // console.log('### [GET] /api/current - session : ', session);
 
   if (!session) {
     return NextResponse.json(
@@ -33,7 +41,8 @@ export async function GET(request: Request) {
   try {
     const currentUser = await prisma.user.findUnique({
       where: {
-        email: session.user!.email!,
+        // email: session.user!.email!,
+        email: session.email!,
       },
     });
 
@@ -50,6 +59,8 @@ export async function GET(request: Request) {
 
     return NextResponse.json(currentUser);
   } catch (error) {
+    console.log('### [GET] /api/current - error : ', error);
+
     return NextResponse.json(
       {
         error: 'Internal server error',
