@@ -1,7 +1,8 @@
+import { User } from '@prisma/client';
 import useSWR from 'swr';
 
 export default function useCurrentUser() {
-  const { data, error, isLoading, mutate } = useSWR(
+  const { data, error, isLoading, mutate } = useSWR<User>(
     '/api/current',
     () => fetch('/api/current').then((res) => res.json()),
     {

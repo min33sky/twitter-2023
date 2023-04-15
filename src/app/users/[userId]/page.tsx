@@ -2,6 +2,7 @@ import type { UserDetail } from '@/app/types';
 import Header from '@/components/Header';
 import React from 'react';
 import UserHero from './UserHero';
+import UserBio from './UserBio';
 
 interface Props {
   params: {
@@ -18,6 +19,7 @@ export default async function UserDetail({ params: { userId } }: Props) {
     <>
       <Header showBackArrow label={user.name || '사용자 이름'} />
       <UserHero user={user} />
+      <UserBio user={user} />
     </>
   );
 }

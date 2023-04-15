@@ -50,6 +50,7 @@ export default function Avatar({
         }}
         onClick={handleClick}
         alt="Avatar"
+        priority={true}
       />
     </div>
   );
