@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prismaDB';
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { getServerSession } from 'next-auth/next';
-import { decode } from 'next-auth/jwt';
+import { JWT, decode } from 'next-auth/jwt';
 
 export async function GET(request: NextRequest) {
   // const session: any = await getToken({
@@ -27,16 +27,16 @@ export async function GET(request: NextRequest) {
 
   console.log('### [GET] /api/current  - cookies : ', cookie);
 
-  const decoded = await decode({
+  const session: JWT | null = await decode({
     token: cookie,
     secret: process.env.NEXTAUTH_SECRET!,
   });
-  console.log('### [GET] /api/current  - decoded 토큰 : ', decoded);
+  console.log('### [GET] /api/current  - decoded 토큰 : ', session);
   // console.log('### [GET] /api/current  - authOptions : ', authOptions);
 
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
 
-  console.log('### [GET] /api/current - session : ', session);
+  // console.log('### [GET] /api/current - session : ', session);
 
   // console.log('### [GET] /api/current - session : ', session);
 
@@ -54,8 +54,8 @@ export async function GET(request: NextRequest) {
   try {
     const currentUser = await prisma.user.findUnique({
       where: {
-        email: session.user!.email!,
-        // email: session.email!,
+        // email: session.user!.email!,
+        email: session.email!,
       },
     });
 
