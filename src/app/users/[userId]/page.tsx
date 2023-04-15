@@ -26,6 +26,9 @@ export default async function UserDetail({ params: { userId } }: Props) {
 
 async function getUser(userId: string) {
   //? 캐시때문에 수정해도 반영이 안되므로 캐시를 무효화시키는 방법을 사용해야함
+  console.log('### process.env.BASE_URL : ', process.env.BASE_URL);
+  console.log('### 시발: ', `${process.env.BASE_URL}/api/users/${userId}`);
+
   const res = await fetch(`${process.env.BASE_URL}/api/users/${userId}`, {
     headers: {
       Accept: 'application/json',
