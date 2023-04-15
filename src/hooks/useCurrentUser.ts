@@ -1,7 +1,6 @@
 import useSWR from 'swr';
 
 export default function useCurrentUser() {
-  // TODO: 실패시 재호출 방지
   const { data, error, isLoading, mutate } = useSWR(
     '/api/current',
     () => fetch('/api/current').then((res) => res.json()),
