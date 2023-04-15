@@ -5,6 +5,7 @@ import { BiCalendar } from 'react-icons/bi';
 import Button from '@/components/Button';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import { formatDate } from '@/lib/formatDate';
+import useEditModal from '@/hooks/useEditModal';
 
 interface Props {
   user: UserDetail;
@@ -14,19 +15,15 @@ export default function UserBio({
   user: { name, bio, createdAt, id, username, followersCount, followingIds },
 }: Props) {
   const { data: currentUser } = useCurrentUser();
+  const editModal = useEditModal();
 
-  // TODO: EditModal create
   // TODO: Follow Function
 
   return (
     <div className="border-b-[1px] border-neutral-800 pb-4">
       <div className="flex justify-end p-2">
         {currentUser?.id === id ? (
-          <Button
-            secondary
-            label="Edit"
-            onClick={() => alert('수정 모달 구현중')}
-          />
+          <Button secondary label="Edit" onClick={editModal.onOpen} />
         ) : (
           <Button
             label="Follow | Unfollow"

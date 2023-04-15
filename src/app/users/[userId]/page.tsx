@@ -25,7 +25,10 @@ export default async function UserDetail({ params: { userId } }: Props) {
 }
 
 async function getUser(userId: string) {
-  const res = await fetch(`${process.env.BASE_URL}/api/users/${userId}`);
+  //? 캐시때문에 수정해도 반영이 안되므로 캐시를 무효화시키는 방법을 사용해야함
+  const res = await fetch(`${process.env.BASE_URL}/api/users/${userId}`, {
+    cache: 'no-store',
+  });
   const user: UserDetail = await res.json();
 
   return user;

@@ -1,7 +1,7 @@
 import { UserDetail } from '@/app/types';
 import useSWR from 'swr';
 
-export default function useUser(userId: string) {
+export default function useUser(userId?: string) {
   const { data, isLoading, error, mutate } = useSWR<UserDetail | null>(
     `/api/users/${userId}`,
     () =>

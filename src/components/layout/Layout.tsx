@@ -6,6 +6,7 @@ import FollowBar from './FollowBar';
 import LoginModal from '../modal/LoginModal';
 import RegisterModal from '../modal/RegisterModal';
 import { Toaster } from 'react-hot-toast';
+import EditModal from '../modal/EditModal';
 
 interface Props {
   children: React.ReactNode;
@@ -15,9 +16,9 @@ export default function Layout({ children }: Props) {
   return (
     <>
       <Toaster />
-      {/* Modal */}
       <LoginModal />
       <RegisterModal />
+      <EditModal />
 
       <div className="container mx-auto h-full max-w-6xl xl:px-28">
         <div className="grid h-full grid-cols-4">
