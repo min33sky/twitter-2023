@@ -18,7 +18,7 @@ export default async function RootLayout({
 
   return (
     <html lang="ko">
-      <body className="h-screen bg-slate-800">
+      <body className="h-screen bg-slate-900">
         <SessionWrapper session={session}>
           <Layout>{children}</Layout>
         </SessionWrapper>
