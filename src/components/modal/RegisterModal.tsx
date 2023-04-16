@@ -63,6 +63,8 @@ const RegisterModal = () => {
       signIn('credentials', {
         email,
         password,
+        redirect: false,
+        callbackUrl: '/',
       });
 
       console.log('로그인 성공!!');

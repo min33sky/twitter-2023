@@ -45,6 +45,7 @@ export default function Sidebar() {
             onClick={() =>
               signOut({
                 callbackUrl: '/',
+                redirect: false,
               })
             }
             label="Logout"
