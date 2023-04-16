@@ -19,7 +19,7 @@
 
 3. 이미지를 base64로 인코딩해서 DB에 저장하는 방법을 써봤는데 개비추 (개느림 , 서버에도 안좋음)
 
-4. `getServerSession` 이거 vercel에 배포하면 왜 작동 안하냐........... 임시 해결책
+4. `getServerSession` 이거 vercel에 배포하면 왜 작동 안하냐........... 임시 해결책 (JWT 디코딩)
 
 ```ts
 import { JWT, decode } from 'next-auth/jwt';
@@ -50,4 +50,15 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+```
+
+5. `fetch`를 사용해 응답받을 때 `json 관련 에러가 발생`할 때 해결법
+
+```ts
+const res = await fetch(`${process.env.BASE_URL}/api/users/${userId}`, {
+  headers: {
+    Accept: 'application/json', // 이거 추가~~~~~~~~~~~
+  },
+  cache: 'no-store',
+});
 ```
