@@ -1,12 +1,12 @@
 import useCurrentUser from '@/hooks/useCurrentUser';
 import useLoginModal from '@/hooks/useLoginModal';
 import { formatDate } from '@/lib/formatDate';
-import { Post } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
-import { AiOutlineMessage } from 'react-icons/ai';
+import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai';
 import Avatar from '../Avatar';
 import { PostDetail } from '@/app/types';
+import useLike from '@/hooks/useLike';
 
 interface Props {
   post: PostDetail;
@@ -18,7 +18,7 @@ export default function PostItem({ post, userId }: Props) {
   const loginModal = useLoginModal();
 
   const { data: currentUser } = useCurrentUser();
-  // TODO: useLike
+  const { hasLiked, toggleLike } = useLike({ postId: post.id, userId });
 
   const goToUser = useCallback(
     (e: React.MouseEvent) => {
@@ -32,11 +32,19 @@ export default function PostItem({ post, userId }: Props) {
     router.push(`/posts/${post.id}`);
   }, [post.id, router]);
 
-  const onLike = useCallback(async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    // TODO: like
-    alert('like');
-  }, []);
+  const onLike = useCallback(
+    async (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (!currentUser) {
+        return loginModal.onOpen();
+      }
+
+      toggleLike();
+    },
+    [currentUser, loginModal, toggleLike],
+  );
+
+  const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
 
   return (
     <div
@@ -96,8 +104,7 @@ export default function PostItem({ post, userId }: Props) {
             "
             >
               <AiOutlineMessage size={20} />
-              댓글 갯수 : 1557
-              {/* <p>{post.comments?.length || 0}</p> */}
+              <p>{post.comments?.length || 0}</p>
             </div>
             <div
               onClick={onLike}
@@ -112,11 +119,8 @@ export default function PostItem({ post, userId }: Props) {
                 hover:text-red-500
             "
             >
-              {/* <LikeIcon color={hasLiked ? 'red' : ''} size={20} /> */}
-              <p>
-                좋아요 수 : 1557
-                {/* {data.likedIds.length} */}
-              </p>
+              <LikeIcon color={hasLiked ? 'red' : ''} size={20} />
+              <p>{post.likeIds.length}</p>
             </div>
           </div>
         </div>

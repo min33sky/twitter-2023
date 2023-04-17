@@ -61,7 +61,14 @@ export async function DELETE(request: Request) {
   }
 
   try {
-    const { postId } = await request.json();
+    const postId = new URL(request.url).searchParams.get('postId');
+
+    if (!postId) {
+      return NextResponse.json(
+        { error: 'Post id is required' },
+        { status: 400 },
+      );
+    }
 
     const existingPost = await prisma.post.findUnique({
       where: {

@@ -7,7 +7,7 @@ import useLoginModal from './useLoginModal';
 
 interface Props {
   postId: string;
-  userId: string;
+  userId?: string;
 }
 
 export default function useLike({ postId, userId }: Props) {
@@ -33,10 +33,9 @@ export default function useLike({ postId, userId }: Props) {
 
       if (hasLiked) {
         request = () =>
-          fetch(`/api/like`, {
+          fetch(`/api/like?postId=${postId}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ postId }),
           });
       } else {
         request = () =>
