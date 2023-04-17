@@ -4,7 +4,13 @@ import useSWR from 'swr';
 export default function useCurrentUser() {
   const { data, error, isLoading, mutate } = useSWR<User>(
     '/api/current',
-    () => fetch('/api/current').then((res) => res.json()),
+    () =>
+      fetch('/api/current').then((res) => {
+        if (!res.ok) {
+          return null;
+        }
+        return res.json();
+      }),
     {
       // https://swr.vercel.app/ko/docs/error-handling
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {

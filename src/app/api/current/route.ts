@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
   if (!session) {
     return NextResponse.json(
       {
-        error: 'Unauthorized',
+        error: '인증 실패',
       },
       {
         status: 401,

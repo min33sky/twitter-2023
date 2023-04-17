@@ -26,6 +26,8 @@ export default function Form({
   const { mutate: muatePosts } = usePosts();
   // TODO: usePost
 
+  console.log('### currentUser : ', currentUser);
+
   const [body, setBody] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
