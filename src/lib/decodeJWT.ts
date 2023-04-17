@@ -5,7 +5,6 @@ import { NextResponse } from 'next/server';
 /**
  * NextAuth에서 제공하는 JWT 토큰을 디코딩한다.
  *
- * @returns JWT | null
  */
 export default async function decodeJWT() {
   const nextCookies = cookies();
@@ -17,7 +16,7 @@ export default async function decodeJWT() {
   console.log('### getJwtSession - cookie : ', cookie);
 
   if (!cookie) {
-    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+    return null;
   }
 
   const session: JWT | null = await decode({

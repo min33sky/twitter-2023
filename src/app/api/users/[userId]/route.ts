@@ -5,7 +5,7 @@ export async function GET(
   request: Request,
   { params: { userId } }: { params: { userId: string } },
 ) {
-  console.log('### [users/[userId]] GET request: ', userId);
+  // console.log('### [users/[userId]] GET request: ', userId);
 
   if (!userId) {
     return NextResponse.json(
@@ -32,8 +32,8 @@ export async function GET(
       }),
     ]);
 
-    console.log('### [users/[userId]] GET user: ', user);
-    console.log('### [users/[userId]] GET followersCount: ', followersCount);
+    // console.log('### [users/[userId]] GET user: ', user);
+    // console.log('### [users/[userId]] GET followersCount: ', followersCount);
 
     if (!user) {
       return NextResponse.json(

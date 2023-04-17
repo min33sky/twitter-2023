@@ -6,6 +6,7 @@ import Button from '@/components/Button';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import { formatDate } from '@/lib/formatDate';
 import useEditModal from '@/hooks/useEditModal';
+import useFollow from '@/hooks/useFollow';
 
 interface Props {
   user: UserDetail;
@@ -18,6 +19,7 @@ export default function UserBio({
   const editModal = useEditModal();
 
   // TODO: Follow Function
+  const { isFollowing, toggleFollow } = useFollow(id);
 
   return (
     <div className="border-b-[1px] border-neutral-800 pb-4">
@@ -26,8 +28,10 @@ export default function UserBio({
           <Button secondary label="Edit" onClick={editModal.onOpen} />
         ) : (
           <Button
-            label="Follow | Unfollow"
-            onClick={() => alert('팔로우 기능 구현중')}
+            onClick={toggleFollow}
+            label={isFollowing ? 'Unfollow' : 'Follow'}
+            secondary={!isFollowing}
+            outline={isFollowing}
           />
         )}
       </div>
