@@ -7,11 +7,13 @@ import useRegisterModal from '@/hooks/useRegisterModal';
 import React, { useCallback, useState } from 'react';
 import Avatar from './Avatar';
 import Button from './Button';
+import usePost from '@/hooks/usePost';
+import toast from 'react-hot-toast';
 
 interface Props {
   placeholder: string;
-  isComment?: boolean;
-  postId?: string;
+  isComment?: boolean; // 댓글 작성 폼인지 여부
+  postId?: string; // 수정할 때 사용
 }
 
 export default function Form({
@@ -23,8 +25,8 @@ export default function Form({
   const loginModal = useLoginModal();
 
   const { data: currentUser } = useCurrentUser();
-  const { mutate: muatePosts } = usePosts();
-  // TODO: usePost
+  const { mutate: mutatePosts } = usePosts();
+  const { mutate: mutatePost } = usePost(postId);
 
   const [body, setBody] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -34,24 +36,30 @@ export default function Form({
       event.preventDefault();
       console.log('### body : ', body);
 
-      // try {
-      //   setIsLoading(true);
+      try {
+        setIsLoading(true);
 
-      //   const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts';
+        const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts';
 
-      //   await axios.post(url, { body });
-
-      //   toast.success('Tweet created');
-      //   setBody('');
-      //   mutatePosts();
-      //   mutatePost();
-      // } catch (error) {
-      //   toast.error('Something went wrong');
-      // } finally {
-      //   setIsLoading(false);
-      // }
+        // await axios.post(url, { body });
+        await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ body }),
+        });
+        toast.success('Tweet created');
+        setBody('');
+        mutatePosts();
+        mutatePost();
+      } catch (error) {
+        toast.error('Something went wrong');
+      } finally {
+        setIsLoading(false);
+      }
     },
-    [body],
+    [body, isComment, mutatePost, mutatePosts, postId],
   );
 
   return (

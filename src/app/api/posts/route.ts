@@ -70,4 +70,28 @@ export async function POST(request: Request) {
   if (!session) {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
+
+  try {
+    const { body } = await request.json();
+    console.log('######### body ::::::::::::::::: ', body);
+
+    const newPost = await prisma.post.create({
+      data: {
+        body,
+        user: {
+          connect: {
+            email: session.email!,
+          },
+        },
+      },
+    });
+
+    return NextResponse.json(newPost);
+  } catch (error) {
+    console.log('### [POST] /api/posts - error : ', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 },
+    );
+  }
 }

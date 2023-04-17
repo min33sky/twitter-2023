@@ -42,16 +42,15 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async redirect({ baseUrl, url }) {
-      console.log('## redirect baseUrl: ', baseUrl);
-      console.log('## redirect url: ', url);
-
-      // Allows relative callback URLs
-      if (url.startsWith('/')) return `${baseUrl}${url}`;
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url;
-      return baseUrl;
-    },
+    // async redirect({ baseUrl, url }) {
+    //   console.log('## redirect baseUrl: ', baseUrl);
+    //   console.log('## redirect url: ', url);
+    //   // Allows relative callback URLs
+    //   if (url.startsWith('/')) return `${baseUrl}${url}`;
+    //   // Allows callback URLs on the same origin
+    //   else if (new URL(url).origin === baseUrl) return url;
+    //   return baseUrl;
+    // },
   },
   debug: process.env.NODE_ENV === 'development',
   session: {
