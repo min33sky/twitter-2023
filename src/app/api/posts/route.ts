@@ -9,11 +9,9 @@ export async function GET(request: Request) {
 
   console.log('### [GET] /api/posts  - userId : ', userId);
 
-  let posts: Post[];
-
   try {
     if (userId) {
-      posts = await prisma.post.findMany({
+      let posts = await prisma.post.findMany({
         where: {
           id: userId,
         },
@@ -25,8 +23,9 @@ export async function GET(request: Request) {
           createdAt: 'desc',
         },
       });
+      return NextResponse.json(posts);
     } else {
-      posts = await prisma.post.findMany({
+      let posts = await prisma.post.findMany({
         include: {
           user: true,
           comments: true,
@@ -35,8 +34,8 @@ export async function GET(request: Request) {
           createdAt: 'desc',
         },
       });
+      return NextResponse.json(posts);
     }
-    return NextResponse.json(posts);
   } catch (error) {
     console.log('### [GET] /api/posts - error : ', error);
     return NextResponse.json(
