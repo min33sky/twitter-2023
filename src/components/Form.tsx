@@ -39,7 +39,8 @@ export default function Form({
       try {
         setIsLoading(true);
 
-        const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts';
+        // const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts';
+        const url = isComment ? `/api/posts/${postId}/comments` : '/api/posts';
 
         // await axios.post(url, { body });
         await fetch(url, {
@@ -49,7 +50,13 @@ export default function Form({
           },
           body: JSON.stringify({ body }),
         });
-        toast.success('Tweet created');
+
+        if (!isComment) {
+          toast.success('Comment created');
+        } else {
+          toast.success('Tweet created');
+        }
+
         setBody('');
         mutatePosts();
         mutatePost();

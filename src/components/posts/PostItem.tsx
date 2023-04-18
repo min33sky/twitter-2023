@@ -71,7 +71,7 @@ export default function PostItem({ post, userId }: Props) {
                 hover:underline
             "
             >
-              이름
+              {post.user.name}
             </p>
             <span
               onClick={goToUser}
@@ -83,7 +83,7 @@ export default function PostItem({ post, userId }: Props) {
                 md:block
             "
             >
-              @유저네임
+              @{post.user.username}
             </span>
             <span className="text-sm text-neutral-500">
               {formatDate(post.createdAt)}

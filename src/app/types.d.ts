@@ -6,5 +6,11 @@ type UserDetail = User & {
 
 type PostDetail = Post & {
   user: User;
-  comments: Comment[];
+  comments: (Comment & {
+    user: User;
+  })[];
+};
+
+type CommentDetail = Comment & {
+  user: User;
 };

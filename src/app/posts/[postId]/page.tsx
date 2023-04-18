@@ -2,6 +2,7 @@
 
 import Form from '@/components/Form';
 import Header from '@/components/Header';
+import CommentFeed from '@/components/posts/CommentFeed';
 import PostItem from '@/components/posts/PostItem';
 import usePost from '@/hooks/usePost';
 import React from 'react';
@@ -28,7 +29,7 @@ export default function PostDetail({ params: { postId } }: Props) {
       <Header showBackArrow label="Tweet" />
       <PostItem post={fetchedPost} />
       <Form postId={postId} isComment placeholder="Tweet your reply" />
-      {/* CommentFeed */}
+      <CommentFeed comments={fetchedPost.comments} />
     </>
   );
 }
