@@ -97,6 +97,30 @@ export async function DELETE(request: Request) {
       },
     });
 
+    // NOTIFICATION PART START
+
+    console.log('################### 시 발 ###############################');
+    console.log('### 좋아요 가즈아 : ', existingPost?.userId);
+
+    if (existingPost?.userId) {
+      await prisma.notification.create({
+        data: {
+          body: 'Someone liked your tweet!',
+          userId: existingPost.userId,
+        },
+      });
+
+      await prisma.user.update({
+        where: {
+          id: existingPost.userId,
+        },
+        data: {
+          hasNotification: true,
+        },
+      });
+    }
+    // NOTIFICATION PART END
+
     return NextResponse.json(updatedPost);
   } catch (error) {
     console.log('### [DELETE] /api/like - error : ', error);

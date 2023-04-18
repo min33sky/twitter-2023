@@ -5,8 +5,11 @@ import SidebarLogo from './SidebarLogo';
 import SidebarItem from './SidebarItem';
 import SidebarTweetButton from './SidebarTweetButton';
 import { signOut } from 'next-auth/react';
+import useCurrentUser from '@/hooks/useCurrentUser';
 
 export default function Sidebar() {
+  const { data: currentUser } = useCurrentUser();
+
   const items = [
     {
       label: 'Home',
@@ -18,6 +21,7 @@ export default function Sidebar() {
       href: '/notifications',
       icon: BsBellFill,
       auth: true,
+      alert: currentUser?.hasNotification,
     },
     {
       label: 'Profile',
@@ -39,6 +43,7 @@ export default function Sidebar() {
               href={item.href}
               icon={item.icon}
               auth={item.auth}
+              alert={item.alert || false}
             />
           ))}
           <SidebarItem

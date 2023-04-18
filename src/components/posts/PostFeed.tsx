@@ -10,7 +10,7 @@ interface Props {
 export default function PostFeed({ userId }: Props) {
   const { posts } = usePosts(userId);
 
-  console.log('### posts : ', posts);
+  // console.log('### posts : ', posts);
 
   return (
     <>

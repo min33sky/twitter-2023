@@ -36,6 +36,28 @@ export async function POST(request: Request) {
       },
     });
 
+    // NOTIFICATION PART START
+    try {
+      await prisma.notification.create({
+        data: {
+          body: 'Someone followed you!',
+          userId,
+        },
+      });
+
+      await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          hasNotification: true,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    // NOTIFICATION PART END
+
     return NextResponse.json(updatedUser);
   } catch (error) {
     console.log('### [POST] /api/follow - error : ', error);

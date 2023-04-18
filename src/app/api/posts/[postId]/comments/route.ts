@@ -14,7 +14,7 @@ export async function POST(
 
   const { postId } = params;
 
-  console.log('### POST /api/posts/[postId]/comments - postId : ', postId);
+  // console.log('### POST /api/posts/[postId]/comments - postId : ', postId);
 
   if (!postId) {
     return NextResponse.json({ error: 'Post id is required' }, { status: 400 });
@@ -24,7 +24,7 @@ export async function POST(
     // 댓글 생성
     const { body } = await request.json();
 
-    console.log('### POST /api/posts/[postId]/comments - body : ', body);
+    // console.log('### POST /api/posts/[postId]/comments - body : ', body);
 
     const comment = await prisma.comment.create({
       data: {
